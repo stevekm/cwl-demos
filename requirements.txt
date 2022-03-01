@@ -1,0 +1,2 @@
+git+https://github.com/mskcc/toil.git@5.4.2#egg=toil[cwl]
+cwlref-runner==1.0
