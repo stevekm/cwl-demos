@@ -4,34 +4,21 @@ class: Workflow
 
 requirements:
   - $import: sampletypes.yml
- # - class: ScatterFeatureRequirement
   - class: InlineJavascriptRequirement
- # - class: StepInputExpressionRequirement
-
 
 inputs:
   sample: "sampletypes.yml#Sample"
-    # type:
-    #   type: record
-    #   fields:
-    #     sample_id: string
-    #     normal_id: string
 
-  # samples:
-  #   type:
-  #     type: array
-  #     items:
-  #       type: record
-  #       fields:
-  #         sample_id: string
-  #         normal_id: string
-
-outputs: []
-  # sample:
-  #   type: "sampletypes.yml#Sample"
-  #   outputSource: collect_output/sample
+outputs:
+  old_sample:
+    type: "sampletypes.yml#Sample"
+    outputSource: process_sample/old_sample
+  new_sample:
+    type: "sampletypes.yml#Sample"
+    outputSource: process_sample/new_sample
 
 steps:
+  # an ExpressionTool that takes a custom type object in and returns one in outputs
   collect_output:
     in:
       sample: sample
@@ -44,34 +31,37 @@ steps:
         sample: "sampletypes.yml#Sample"
       expression: |
         ${
-        console.log('foo');
         return { 'sample': inputs.sample };
         }
 
+  # a CommandLineTool that takes a custom type obj in,
+  # and outputs a new custom type object with a new file but retaining some of the original fields
   process_sample:
     in:
       sample: collect_output/sample
-    out: [ sample_file, sample, new_sample ]
+    out: [ sample_file, old_sample, new_sample ]
     run:
       class: CommandLineTool
       baseCommand: ['touch', 'output.txt']
       inputs:
         sample: "sampletypes.yml#Sample"
       outputs:
+        # just the new file output
         sample_file:
           type: File
           outputBinding:
             glob: output.txt
-        sample:
+        # the original custom object returned back out
+        old_sample:
           type: "sampletypes.yml#Sample"
           outputBinding:
             outputEval: $(inputs.sample)
+        # modify the original object to include the new file output
         new_sample:
           type: "sampletypes.yml#Sample"
           outputBinding:
             outputEval: ${
-              console.log("process_sample fooo");
               var ret = inputs.sample;
-              ret['sample_file'].path = runtime.outdir + "/" + "output.txt";
+              ret['sample_file'] = {"class":"File", "path":runtime.outdir + "/" + "output.txt"};
               return ret;
               }
