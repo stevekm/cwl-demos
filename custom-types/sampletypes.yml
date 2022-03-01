@@ -1,0 +1,11 @@
+class: SchemaDefRequirement
+types:
+- name: Sample
+  type: record
+  fields:
+    - name: sample_id
+      type: string
+    - name: normal_id
+      type: string
+    - name: sample_file
+      type: File

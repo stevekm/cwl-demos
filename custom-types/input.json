@@ -1,0 +1,7 @@
+{
+    "sample": {
+        "sample_id": "foo",
+        "normal_id": "bar",
+        "sample_file": {"class":"File", "path":"input1.txt"}
+    }
+}
