@@ -33,4 +33,6 @@ $ ./run-cwltool.sh custom-types/sampletypes.cwl custom-types/input.json
 
 - https://cwl.discourse.group/
 
+- https://github.com/common-workflow-language/cwl-v1.2/tree/main/tests
+
 - [`pluto`](https://github.com/mskcc/pluto), [`pluto-cwl`](https://github.com/mskcc/pluto-cwl)
