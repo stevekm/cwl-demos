@@ -1,0 +1,14 @@
+{
+    "samples": [
+        {
+        "sample_id": "Sample1-T",
+        "normal_id": "Sample1-N",
+        "sample_file": {"class":"File", "path":"input1.txt"}
+        },
+        {
+        "sample_id": "Sample2-T",
+        "normal_id": "Sample2-N",
+        "sample_file": {"class":"File", "path":"input2.txt"}
+        },
+    ]
+}
