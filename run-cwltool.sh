@@ -1,9 +1,18 @@
 #!/bin/bash
-# wrapper around running cwltool with some extra settings
+
+# wrapper around running cwltool
+# includes extra CLI args and sets up temporary directories to run in
+# so that repeated runs do not collide
+
+# adapted from https://github.com/mskcc/pluto/blob/master/run-cwltool.sh
+# see also https://github.com/mskcc/pluto/blob/master/run-toil.sh
+
 # example usage;
 # $ make bash
 # $ ./run-cwltool.sh cwl/some_workflow.cwl input.json
-set -eu
+
+set -euo pipefail
+
 TIMESTAMP="$(date +%s)"
 RUN_DIR="${PWD}/cwltool_runs/${TIMESTAMP}"
 OUTPUT_DIR="${RUN_DIR}/output"
@@ -14,17 +23,15 @@ LOG_FILE="${RUN_DIR}/stdout.log"
 mkdir -p "$OUTPUT_DIR"
 mkdir -p "$TMP_DIR"
 
-set -x
+{ set -x ;
 cwltool \
 --preserve-environment PATH \
---preserve-environment SINGULARITY_CACHEDIR \
---singularity \
 --leave-tmpdir \
 --debug \
 --js-console \
 --outdir "$OUTPUT_DIR" \
 --tmpdir-prefix "$TMP_DIR" \
-$@ 2>&1 | tee "${LOG_FILE}"
+$@  ; } 2>&1 | tee "${LOG_FILE}"
 
 echo ">>> done: ${RUN_DIR}"
 
@@ -32,5 +39,6 @@ echo ">>> done: ${RUN_DIR}"
 # --parallel
 # --js-console
 # --cachedir
-
+# --preserve-environment SINGULARITY_CACHEDIR \
+# --singularity \
 # NOTE: --parallel causes random failures too often so do not use it by default!
