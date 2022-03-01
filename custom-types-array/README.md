@@ -7,3 +7,5 @@ Custom sample type in this case is an array object
 - https://github.com/andersgs/cwl_flows/blob/d0be8f7f06973766c74497f05be7f0150b680610/limit_detection/seqtk_sample_PE.cwl#L20
 
 - https://github.com/andersgs/cwl_flows/blob/d0be8f7f06973766c74497f05be7f0150b680610/limit_detection/readPair.yml
+
+- https://www.biostars.org/p/314504/
