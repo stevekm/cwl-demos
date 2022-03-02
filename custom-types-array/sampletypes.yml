@@ -9,3 +9,5 @@ types:
       type: string
     - name: sample_file
       type: File
+      secondaryFiles:
+          - ^.idx
