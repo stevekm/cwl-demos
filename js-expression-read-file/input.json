@@ -1,0 +1,10 @@
+{
+    "samples": [
+      {"sample_id": "Sample1", "sample_type": "research"},
+      {"sample_id": "Sample2", "sample_type": "research"},
+      {"sample_id": "Sample3", "sample_type": "clinical"},
+      {"sample_id": "Sample4", "sample_type": "research"},
+      {"sample_id": "Sample5", "sample_type": "clinical"},
+      {"sample_id": "Sample6", "sample_type": "research"},
+    ]
+}
