@@ -16,6 +16,7 @@ endif
 
 CONDAURL:=https://repo.anaconda.com/miniconda/$(CONDASH)
 
+# might also need this one macOS:  brew install coreutils
 conda:
 	@set +e
 	echo ">>> Setting up conda..."
@@ -24,6 +25,7 @@ conda:
 	rm -f "$(CONDASH)"
 
 install: conda
+	conda install -y conda-forge::nodejs
 	pip install -r requirements.txt
 
 bash:
